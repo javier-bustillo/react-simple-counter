@@ -3,9 +3,6 @@ import React from "react";
 import ReactDOM from "react-dom";
 import PropTypes from "prop-types";
 
-// include bootstrap npm library into the bundle
-// import "bootstrap";
-
 // include your styles into the webpack bundle
 import "../styles/index.css";
 
@@ -29,6 +26,7 @@ const secBoxStyles = {
 };
 
 function SimpleCounter(props) {
+	console.log(props.secOne);
 	return (
 		<div className="mainBox justify-content-baseline" style={mainBoxStyles}>
 			<div className="clockIcon" style={secBoxStyles}>
@@ -46,10 +44,10 @@ function SimpleCounter(props) {
 			<div className="secBoxThree" style={secBoxStyles}>
 				{props.secThree}
 			</div>
-			<div className="secBoxTwo" style={secBoxStyles}>
+			<div className="secBoxTwo % 10" style={secBoxStyles}>
 				{props.secTwo}
 			</div>
-			<div className="secBoxOne" style={secBoxStyles}>
+			<div className="secBoxOne % 10" style={secBoxStyles}>
 				{props.secOne}
 			</div>
 		</div>
@@ -65,27 +63,45 @@ SimpleCounter.propTypes = {
 	secSix: PropTypes.number,
 };
 
-let counter = 0;
+let counterSecOne = 0;
+let counterSecTwo = 0;
+let counterSecThree = 0;
+let counterSecFour = 0;
+let counterSecFive = 0;
+let counterSecSix = 0;
 
 setInterval(() => {
-	const sec6 = Math.floor(counter / 1000000);
-	const sec5 = Math.floor(counter / 100000);
-	const sec4 = Math.floor(counter / 10000);
-	const sec3 = Math.floor(counter / 1000);
-	const sec2 = Math.floor(counter / 100);
-	const sec1 = Math.floor(counter / 1);
-
-	counter++;
+	counterSecOne++;
+	if (counterSecOne >= 9) {
+		counterSecOne = 0;
+		counterSecTwo++;
+		if (counterSecTwo >= 9) {
+			counterSecTwo = 0;
+			counterSecThree++;
+			if (counterSecThree >= 9) {
+				counterSecThree = 0;
+				counterSecFour++;
+				if (counterSecFour >= 9) {
+					counterSecFour = 0;
+					counterSecFive++;
+					if (counterSecFive >= 9) {
+						counterSecFive = 0;
+						counterSecSix++;
+					}
+				}
+			}
+		}
+	}
 
 	ReactDOM.render(
 		<SimpleCounter
-			secSix={sec6}
-			secFive={sec5}
-			secFour={sec4}
-			secThree={sec3}
-			secTwo={sec2}
-			secOne={sec1}
+			secSix={counterSecSix}
+			secFive={counterSecFive}
+			secFour={counterSecFour}
+			secThree={counterSecThree}
+			secTwo={counterSecTwo}
+			secOne={counterSecOne}
 		/>,
 		document.querySelector("#app")
 	);
-}, 1000);
+}, 1);
