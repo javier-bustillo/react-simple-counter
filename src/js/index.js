@@ -104,4 +104,4 @@ setInterval(() => {
 		/>,
 		document.querySelector("#app")
 	);
-}, 1);
+}, 1000);
